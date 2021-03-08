@@ -1,10 +1,12 @@
 connection: "bigquery"
+label: "Customer Service"
 
 include: "*_zendesk_block.view"
 include: "*_zendesk_variables.view"
 include: "*.dashboard"
 
 explore: ticket {
+  label: "Zendesk"
   join: assignee {
     sql_on: ${ticket.assignee_id} = ${assignee.id} ;;
     relationship: many_to_one
