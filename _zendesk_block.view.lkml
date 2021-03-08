@@ -467,7 +467,6 @@ view: assignee {
   # ----- agent comparison fields -----
   filter: agent_select {
     view_label: "Agent Comparisons"
-    suggest_dimension: user.name
   }
 
   dimension: agent_comparitor {
