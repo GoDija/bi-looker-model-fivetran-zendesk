@@ -530,7 +530,7 @@ view: ticket_comment {
 
   derived_table: {
     sql: SELECT *, row_number() over (partition by ticket_id order by created asc) as comment_sequence
-      FROM zendesk.ticket_comment ;;
+      FROM raw_zendesk.ticket_comment ;;
   }
 
   dimension: id {
@@ -840,10 +840,10 @@ view: ticket_history_facts {
           ,count(distinct case when field_name = 'assignee_id' then value else null end) as number_of_distinct_assignees
           ,count(distinct case when field_name = 'group_id' then value else null end) as number_of_distinct_groups
 
-      FROM zendesk.ticket_field_history as tfh
+      FROM raw_zendesk.ticket_field_history as tfh
       LEFT JOIN (
           SELECT ticket_id, created, row_number() over (partition by ticket_id order by created asc) as comment_sequence
-          FROM zendesk.ticket_comment
+          FROM raw_zendesk.ticket_comment
       ) tc on tc.ticket_id = tfh.ticket_id and tc.comment_sequence = 2
       GROUP BY tfh.ticket_id, tc.created ;;
   }
@@ -1036,7 +1036,7 @@ view: number_of_reopens {
   derived_table: {
     sql:  WITH grouped_ticket_status_history AS (
             SELECT *
-            FROM zendesk.ticket_field_history
+            FROM raw_zendesk.ticket_field_history
             WHERE field_name = 'status'
             ORDER BY ticket_id, updated
          ),
@@ -1100,7 +1100,7 @@ view: ticket_assignee_facts {
         , min(created_at) as first_ticket
         , max(created_at) as latest_ticket
         , 1.0 * COUNT(*) / NULLIF(DATE_DIFF(CURRENT_DATE, MIN(EXTRACT(date from created_at)), day), 0) AS avg_tickets_per_day
-      FROM zendesk.ticket
+      FROM raw_zendesk.ticket
       GROUP BY 1
        ;;
   }
