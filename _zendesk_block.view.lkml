@@ -2,7 +2,7 @@ include: "_zendesk_variables.view"
 
 view: ticket {
   extends: [_variables]
-  sql_table_name: zendesk.ticket ;;
+  sql_table_name: raw_zendesk.ticket ;;
 
   # ----- database fields -----
   dimension: id {
@@ -388,7 +388,7 @@ view: ticket {
 
 view: user {
   extends: [_variables]
-  sql_table_name: zendesk.user ;;
+  sql_table_name: raw_zendesk.user ;;
   extension: required
 
   dimension: id {
@@ -604,7 +604,7 @@ view: ticket_comment {
 }
 
 view: ticket_field_history {
-  sql_table_name: zendesk.ticket_field_history ;;
+  sql_table_name: raw_zendesk.ticket_field_history ;;
 
   dimension: field_name {
     type: string
@@ -644,7 +644,7 @@ view: ticket_field_history {
 }
 
 view: organization {
-  sql_table_name: zendesk.organization ;;
+  sql_table_name: raw_zendesk.organization ;;
 
   # Just as agents can be segmented into groups in Zendesk Support, your customers (end-users)
   # can be segmented into organizations. You can manually assign customers to an organization
@@ -700,7 +700,7 @@ view: organization {
 }
 
 view: organization_member {
-  sql_table_name: zendesk.organization_member ;;
+  sql_table_name: raw_zendesk.organization_member ;;
 
   dimension: id {
     primary_key: yes
@@ -724,7 +724,7 @@ view: organization_member {
 
 view: group {
   view_label: "Organization"
-  sql_table_name: zendesk.`group` ;;
+  sql_table_name: raw_zendesk.`group` ;;
 
   # When support requests arrive in Zendesk Support, they can be assigned to a Group.
   # Groups serve as the core element of ticket workflow; support agents are organized into
@@ -783,7 +783,7 @@ view: group {
 }
 
 view: group_member {
-  sql_table_name: zendesk.group_member ;;
+  sql_table_name: raw_zendesk.group_member ;;
 
   dimension: id {
     primary_key: yes
@@ -807,7 +807,7 @@ view: group_member {
 
 view: brand {
   view_label: "Ticket"
-  sql_table_name: zendesk.brand ;;
+  sql_table_name: raw_zendesk.brand ;;
 
   dimension: id {
     primary_key: yes
