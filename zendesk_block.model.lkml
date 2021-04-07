@@ -4,6 +4,7 @@ label: "Customer Service"
 include: "*_zendesk_block.view"
 include: "*_zendesk_variables.view"
 include: "*.dashboard"
+include: "/views/*.view"
 
 explore: ticket {
   label: "Zendesk"
@@ -57,6 +58,32 @@ explore: ticket {
   join: ticket_assignee_facts {
     type: left_outer
     sql_on: ${ticket.assignee_id} = ${ticket_assignee_facts.assignee_id} ;;
+    relationship: many_to_one
+  }
+
+  join: ticket_tag {
+    view_label: "Ticket tag"
+    type: left_outer
+    sql_on: ${ticket.id} = ${ticket_tag.ticket_id} ;;
+    relationship: one_to_many
+  }
+
+  join: ticket_tag_history {
+    type: left_outer
+    sql_on: ${ticket.id} = ${ticket_tag_history.ticket_id} ;;
+    relationship: one_to_many
+  }
+
+  join: zendesk_user {
+    type: left_outer
+    sql_on: ${ticket_tag_history.user_id} = ${zendesk_user.id} ;;
+    relationship: many_to_one
+  }
+
+  join: zendesk_ticket_tag_locations_table {
+    view_label: "Ticket tag"
+    type: left_outer
+    sql_on: ${ticket_tag.tag} = ${zendesk_ticket_tag_locations_table.tag_name} ;;
     relationship: many_to_one
   }
 
