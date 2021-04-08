@@ -65,16 +65,17 @@ explore: ticket {
   }
 
   join: zendesk_user {
+    view_label: "All Users"
     type: left_outer
     sql_on: ${ticket_tag_history.user_id} = ${zendesk_user.id} ;;
     relationship: many_to_one
   }
 
-  join: zendesk_ticket_tag_locations_table {
-    view_label: "Ticket tag"
+  join: ticket_detail_data {
+    view_label: "Ticket"
     type: left_outer
-    sql_on: ${ticket_tag.tag} = ${zendesk_ticket_tag_locations_table.tag_name} ;;
-    relationship: many_to_one
+    sql_on: ${ticket_detail_data.ticket_id} =  ${ticket.id} ;;
+    relationship: one_to_one
   }
 
   # metric queries

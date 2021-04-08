@@ -1122,4 +1122,48 @@ view: ticket_assignee_facts {
   set: detail {
     fields: [assignee_id, lifetime_tickets, first_ticket_time, latest_ticket_time, avg_tickets_per_day]
   }
+
+}
+
+view: ticket_detail_data {
+  view_label: "Ticket"
+  derived_table: {
+    sql:  WITH
+        ticket_a AS (
+        SELECT
+          ticket_id,
+          tag,
+          site_location_name
+        FROM
+          raw_zendesk.ticket_tag
+        LEFT JOIN
+          `dija-nucleous.master_tables.zendesk_ticket_tag_locations_table` AS zendesk_ticket_tag_locations_table
+        ON
+          tag = tag_name )
+      SELECT
+        ticket_id,
+        site_location_name
+      FROM
+        ticket_a
+      WHERE
+        site_location_name IS NOT NULL
+      GROUP BY
+        1,
+        2 ;;
+  }
+
+  dimension: ticket_id {
+    type: number
+    sql: ${TABLE}.ticket_id ;;
+    hidden: yes
+    primary_key: yes
+  }
+
+  dimension: site_location_name {
+    label: "Ticket Store Name"
+    type: string
+    sql: ${TABLE}.site_location_name ;;
+    description: "Store Location for the Ticket"
+  }
+
 }
