@@ -16,8 +16,8 @@ view: ticket_tag {
   }
 
   dimension: numeric_tag {
-    type: yesno
-    sql: REGEXP_CONTAINS(${tag},r'[^\d]+')=false
+    type: string
+    sql: REGEXP_CONTAINS(${tag},r'[^\d]+');;
   }
 
 

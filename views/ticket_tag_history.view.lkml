@@ -10,8 +10,8 @@ view: ticket_tag_history {
   }
 
   dimension: numeric_tag {
-    type: yesno
-    sql: REGEXP_CONTAINS(${tag},r'[^\d]+')=false
+    type: string
+    sql: REGEXP_CONTAINS(${tag},r'[^\d]+');;
   }
 
   dimension: tagged {
