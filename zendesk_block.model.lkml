@@ -7,7 +7,7 @@ include: "*.dashboard"
 include: "/views/*.view"
 
 explore: ticket {
-  label: "Zendesk"
+  label: "Ticketing Analytics"
   join: assignee {
     sql_on: ${ticket.assignee_id} = ${assignee.id} ;;
     relationship: many_to_one
