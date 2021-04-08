@@ -52,13 +52,14 @@ explore: ticket {
   }
 
   join: ticket_tag {
-    view_label: "Ticket tag"
+    view_label: "Ticket tags"
     type: left_outer
     sql_on: ${ticket.id} = ${ticket_tag.ticket_id} ;;
     relationship: one_to_many
   }
 
   join: ticket_tag_history {
+    view_label: "Ticket tags history"
     type: left_outer
     sql_on: ${ticket.id} = ${ticket_tag_history.ticket_id} ;;
     relationship: one_to_many
