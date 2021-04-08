@@ -15,6 +15,13 @@ view: ticket_tag {
     sql: ${TABLE}.ticket_id ;;
   }
 
+  dimension: numeric_tag {
+    type: yesno
+    sql: REGEXP_CONTAINS(${tag},r'[^\d]+')=false
+  }
+
+
+
   measure: count_tags {
     label: "Number of Tags"
     type: count_distinct
