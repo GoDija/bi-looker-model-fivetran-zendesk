@@ -54,9 +54,6 @@
     type: looker_column
     fields:
     - ticket.count
-    - organization.name
-    filters:
-      organization.name: "-NULL"
     sorts:
     - ticket.count desc
     limit: 10
@@ -1395,10 +1392,6 @@
     model: zendesk_block
     explore: ticket
     type: single_value
-    fields:
-    - organization.name
-    sorts:
-    - organization.name
     limit: 500
     column_limit: 50
     custom_color_enabled: false

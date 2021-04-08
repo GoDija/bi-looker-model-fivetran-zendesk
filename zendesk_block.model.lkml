@@ -28,16 +28,6 @@ explore: ticket {
     relationship: many_to_one
   }
 
-  join: organization_member {
-    sql_on: ${requester.id} = ${organization_member.user_id} ;;
-    relationship: many_to_one
-  }
-
-  join: organization {
-    sql_on: ${organization_member.organization_id} = ${organization.id} ;;
-    relationship: many_to_one
-  }
-
   join: brand {
     type: left_outer
     sql_on: ${ticket.brand_id} = ${brand.id} ;;
