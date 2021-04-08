@@ -15,7 +15,7 @@ view: ticket_tag {
     sql: ${TABLE}.ticket_id ;;
   }
 
-  dimension: numeric_tag {
+  dimension: is_not_numeric_tag {
     type: string
     sql: REGEXP_CONTAINS(${tag},r'[^\d]+');;
   }

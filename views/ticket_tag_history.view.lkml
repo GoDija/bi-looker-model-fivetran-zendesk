@@ -9,7 +9,7 @@ view: ticket_tag_history {
     sql: ${TABLE}.tag ;;
   }
 
-  dimension: numeric_tag {
+  dimension: is_not_numeric_tag {
     type: string
     sql: REGEXP_CONTAINS(${tag},r'[^\d]+');;
   }
