@@ -1129,27 +1129,44 @@ view: ticket_detail_data {
   view_label: "Ticket"
   derived_table: {
     sql:  WITH
-        ticket_a AS (
-        SELECT
-          ticket_id,
-          tag,
-          site_location_name
-        FROM
-          raw_zendesk.ticket_tag
-        LEFT JOIN
-          `dija-nucleous.master_tables.zendesk_ticket_tag_locations_table` AS zendesk_ticket_tag_locations_table
-        ON
-          tag = tag_name )
-      SELECT
-        ticket_id,
-        site_location_name
-      FROM
-        ticket_a
-      WHERE
-        site_location_name IS NOT NULL
-      GROUP BY
-        1,
-        2 ;;
+  ticket_a AS (
+  SELECT
+    ticket_id,
+    site_location_name
+  FROM
+    `dija-nucleous.raw_zendesk.ticket_tag`
+  LEFT JOIN
+    `dija-nucleous.master_tables.zendesk_ticket_tag_locations_table` AS zendesk_ticket_tag_locations_table
+  ON
+    tag = tag_name
+    where site_location_name is not null
+    GROUP BY 1,2),
+
+      ticket_b AS (
+  SELECT
+    ticket_id,
+     CASE
+    WHEN tag IN ("dsp","deliveroo") THEN "DSP"
+    WHEN tag IN ("d2c") THEN "DTC" END as order_delivered_by
+  FROM
+    `dija-nucleous.raw_zendesk.ticket_tag`
+    where tag in ("dsp","deliveroo","d2c")
+    GROUP BY 1,2
+ )
+
+
+SELECT
+  ticket_id,
+  site_location_name,
+  order_delivered_by
+FROM
+  ticket_a
+  FULL JOIN
+ticket_b USING(ticket_id)
+GROUP BY
+  1,
+  2,
+  3 ;;
   }
 
   dimension: ticket_id {
@@ -1164,6 +1181,13 @@ view: ticket_detail_data {
     type: string
     sql: ${TABLE}.site_location_name ;;
     description: "Store Location for the Ticket"
+  }
+
+  dimension: order_delivered_by {
+    label: "Ticket (DSP/D2C)"
+    type: string
+    sql: ${TABLE}.order_delivered_by ;;
+    description: "D2c or DSP"
   }
 
 }
