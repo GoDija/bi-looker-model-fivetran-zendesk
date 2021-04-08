@@ -251,6 +251,13 @@ view: ticket {
        ;;
   }
 
+  measure: count_distinct_tickets {
+    group_label: "Counts"
+    label: "Total number of Tickets"
+    type: count_distinct
+    sql: ${id} ;;
+  }
+
   measure: count_backlogged_tickets {
     group_label: "Counts"
     type: count
