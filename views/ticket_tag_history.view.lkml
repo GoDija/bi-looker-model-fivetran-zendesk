@@ -9,6 +9,11 @@ view: ticket_tag_history {
     sql: ${TABLE}.tag ;;
   }
 
+  dimension: numeric_tag {
+    type: yesno
+    sql: REGEXP_CONTAINS(${tag},r'[^\d]+')=false
+  }
+
   dimension: tagged {
     label: "Is Tagged (T/F)"
     type: yesno
