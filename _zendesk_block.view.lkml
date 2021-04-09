@@ -200,6 +200,7 @@ view: ticket {
     sql: 1.00 * DATETIME_DIFF(${ticket_history_facts.solved_raw}, ${created_raw}, MINUTE) ;;
   }
 
+
   dimension: is_responded_to {
     type: yesno
     sql: ${minutes_to_first_response} is not null ;;
@@ -231,6 +232,18 @@ view: ticket {
   measure: median_minutes_to_solve {
     type: median
     sql: ${minutes_to_solve} ;;
+    value_format_name: decimal_2
+  }
+
+  measure: avg_hours_to_solve {
+    type: average
+    sql: ${hours_to_solve} ;;
+    value_format_name: decimal_2
+  }
+
+  measure: median_hours_to_solve {
+    type: median
+    sql: ${hours_to_solve} ;;
     value_format_name: decimal_2
   }
 
