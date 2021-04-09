@@ -186,12 +186,18 @@ view: ticket {
 
   dimension: minutes_to_first_response {
     type: number
-    sql: 1.00 * DATETIME_DIFF(EXTRACT(DATETIME FROM ${ticket_history_facts.first_response_raw}), EXTRACT(DATETIME FROM ${created_raw}), MINUTE) ;;
+    sql: 1.00 * DATETIME_DIFF(EXTRACT(DATETIME FROM ${ticket_history_facts.first_response_raw}), EXTRACT(DATETIME FROM ${created_raw}), SECONDS)/60 ;;
   }
+
 
   dimension: hours_to_solve {
     type: number
     sql: 1.00 * DATETIME_DIFF(${ticket_history_facts.solved_raw}, ${created_raw}, HOUR) ;;
+  }
+
+  dimension: minutes_to_solve {
+    type: number
+    sql: 1.00 * DATETIME_DIFF(${ticket_history_facts.solved_raw}, ${created_raw}, SECONDS)/60 ;;
   }
 
   dimension: is_responded_to {
@@ -213,6 +219,18 @@ view: ticket {
   measure: avg_days_to_solve {
     type: average
     sql: ${days_to_solve} ;;
+    value_format_name: decimal_2
+  }
+
+  measure: avg_minutes_to_solve {
+    type: average
+    sql: ${minutes_to_solve} ;;
+    value_format_name: decimal_2
+  }
+
+  measure: median_minutes_to_solve {
+    type: median
+    sql: ${minutes_to_solve} ;;
     value_format_name: decimal_2
   }
 
@@ -303,6 +321,13 @@ view: ticket {
     sql: ${minutes_to_first_response} ;;
     value_format_name: decimal_0
   }
+
+  measure: median_minutes_to_response {
+    type: median
+    sql: ${minutes_to_first_response} ;;
+    value_format_name: decimal_0
+  }
+
 
 
   # ----- measures ------
