@@ -79,6 +79,13 @@ explore: ticket {
     relationship: one_to_one
   }
 
+  join: ticket_comments {
+    view_label: "Ticket"
+    type: left_outer
+    sql_on: ${ticket_comments.ticket_id} =  ${ticket.id} ;;
+    relationship: one_to_one
+  }
+
   # metric queries
 
   join: ticket_history_facts {

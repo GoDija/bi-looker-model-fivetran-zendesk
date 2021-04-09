@@ -1224,3 +1224,28 @@ GROUP BY
   }
 
 }
+
+view: ticket_comments {
+  view_label: "Ticket"
+  derived_table: {
+    sql:  SELECT ticket_id, COUNT(DISTINCT(id)) as number_of_comments FROM `dija-nucleous.raw_zendesk.ticket_comment`
+GROUP BY ticket_id
+;;
+  }
+
+  dimension: ticket_id {
+    type: number
+    sql: ${TABLE}.ticket_id ;;
+    hidden: yes
+    primary_key: yes
+  }
+
+
+  dimension: number_of_comments {
+    label: "Number of Comments"
+    type: number
+    sql: ${TABLE}.number_of_comments ;;
+    description: "Number of Comments in the Ticket"
+  }
+
+}
