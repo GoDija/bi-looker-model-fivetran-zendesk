@@ -186,7 +186,7 @@ view: ticket {
 
   dimension: minutes_to_first_response {
     type: number
-    sql: 1.00 * DATETIME_DIFF(EXTRACT(DATETIME FROM ${ticket_history_facts.first_response_raw}), EXTRACT(DATETIME FROM ${created_raw}), SECONDS)/60 ;;
+    sql: 1.00 * DATETIME_DIFF(EXTRACT(DATETIME FROM ${ticket_history_facts.first_response_raw}), EXTRACT(DATETIME FROM ${created_raw}), SECOND)/60 ;;
   }
 
 
@@ -197,7 +197,7 @@ view: ticket {
 
   dimension: minutes_to_solve {
     type: number
-    sql: 1.00 * DATETIME_DIFF(${ticket_history_facts.solved_raw}, ${created_raw}, SECONDS)/60 ;;
+    sql: 1.00 * DATETIME_DIFF(${ticket_history_facts.solved_raw}, ${created_raw}, SECOND)/60 ;;
   }
 
   dimension: is_responded_to {
