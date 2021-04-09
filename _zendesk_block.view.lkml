@@ -864,6 +864,7 @@ view: ticket_history_facts {
     timeframes: [
       raw,
       time,
+      hour_of_day,
       date,
       week,
       month,
