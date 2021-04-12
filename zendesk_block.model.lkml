@@ -86,6 +86,13 @@ explore: ticket {
     relationship: one_to_one
   }
 
+  join: satisfaction_rating {
+    view_label: "Satisfaction Rating"
+    type: left_outer
+    sql_on: ${satisfaction_rating.ticket_id} =  ${ticket.id} ;;
+    relationship: one_to_one
+  }
+
   # metric queries
 
   join: ticket_history_facts {
